@@ -10,7 +10,7 @@ namespace EStore.Messages.Response
     {
         public ResponseBase()
         {
-            Messages = new List<string>;  
+            Messages = new List<string>();  
         }
         public HttpStatusCode StatusCode { get; set; }
         public List<string> Messages { get; set; }
