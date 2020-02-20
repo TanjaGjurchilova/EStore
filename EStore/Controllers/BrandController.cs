@@ -43,7 +43,7 @@ namespace EStore.Controllers
             return fetchBrandsResponse;
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult<CreateBrandResponse> PostBrand(CreateBrandRequest createBrandRequest) //Model binding
         {
@@ -51,7 +51,7 @@ namespace EStore.Controllers
             return createBrandResponse;
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPut()]
         public ActionResult<UpdateBrandResponse> PutBrand(UpdateBrandRequest updateBrandRequest)
         {
@@ -59,7 +59,7 @@ namespace EStore.Controllers
             return updateBrandResponse;
         }
 
-        [Authorize(Roles = "Administrator")]
+       // [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public ActionResult<DeleteBrandResponse> DeleteBrand(long id)
         {

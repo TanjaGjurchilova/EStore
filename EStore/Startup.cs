@@ -39,6 +39,7 @@ namespace EStore
             services.AddTransient<IBrandService, BrandService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ICatalogueService, CatalogueService>();
 
             services.AddSwaggerGen(c =>
             {

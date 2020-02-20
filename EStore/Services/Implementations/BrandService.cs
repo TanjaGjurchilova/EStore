@@ -5,6 +5,7 @@ using EStore.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace EStore.Services.Implementations
@@ -79,7 +80,26 @@ namespace EStore.Services.Implementations
 
         public CreateBrandResponse SaveBrand(CreateBrandRequest brandRequest)
         {
-            throw new NotImplementedException();
+            var createBrandResponse = new CreateBrandResponse();
+
+            var brand = _messageMapper.MapToBrand(brandRequest.Brand);
+            try
+            {
+                _brandRepository.SaveBrand(brand);
+                var brandDto = _messageMapper.MapToBrandDto(brand);
+                createBrandResponse.Brand = brandDto;
+                createBrandResponse.Messages.Add("Successfully saved the brand");
+                createBrandResponse.StatusCode = HttpStatusCode.Created;
+
+            }
+            catch (Exception e)
+            {
+                var error = e.ToString();
+                createBrandResponse.Messages.Add(error);
+                createBrandResponse.StatusCode = HttpStatusCode.InternalServerError;
+            }
+
+            return createBrandResponse;
         }
     }
 }
