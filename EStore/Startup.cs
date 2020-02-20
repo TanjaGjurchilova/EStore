@@ -45,7 +45,7 @@ namespace EStore
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "UserApi",
+                    Title = "ProductCatalogApi",
                     Version = "v1"
                 });
             });
