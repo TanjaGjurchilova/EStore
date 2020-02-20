@@ -12,10 +12,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EStore.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
-    [ApiController]
-    public class CategoryController : ControllerBase
+  
+    public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;
         public CategoryController(ICategoryService categoryService)
@@ -44,7 +44,7 @@ namespace EStore.Controllers
             return fetchCategoriesResponse;
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult<CreateCategoryResponse> PostCategory(CreateCategoryRequest createCategoryRequest)
         {
@@ -52,7 +52,7 @@ namespace EStore.Controllers
             return createCategoryResponse;
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPut()]
         public ActionResult<UpdateCategoryResponse> PutCategory(UpdateCategoryRequest updateCategoryRequest)
         {
@@ -62,7 +62,7 @@ namespace EStore.Controllers
             return updateCategoryResponse;
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public ActionResult<DeleteCategoryResponse> DeleteCategory(long id)
         {

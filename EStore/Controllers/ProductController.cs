@@ -12,9 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EStore.Controllers
 {
-    [Authorize]
+   // [Authorize]
     [Route("api/[controller]")]
-    [ApiController]
+  
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -49,8 +49,16 @@ namespace EStore.Controllers
             var fetchProductsResponse = _productService.GetProducts(fetchProductsRequest);
             return fetchProductsResponse;
         }
+        [AllowAnonymous]
+        [HttpGet()]
+        public ActionResult<FetchProductsResponse> GetProduct()
+        {
+            var fetchProductsRequest = new FetchProductsRequest { };
+            var fetchProductsResponse = _productService.GetProducts(fetchProductsRequest);
+            return fetchProductsResponse;
+        }
 
-        [Authorize(Roles = "Administrator")]
+        // [Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult<CreateProductResponse> PostProduct(CreateProductRequest createProductRequest)
         {
@@ -58,7 +66,7 @@ namespace EStore.Controllers
             return createProductResponse;
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpPut()]
         public ActionResult<UpdateProductResponse> PutProduct(UpdateProductRequest updateProductRequest)
         {
@@ -68,7 +76,7 @@ namespace EStore.Controllers
             return updateProductResponse;
         }
 
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
         public ActionResult<DeleteProductResponse> DeleteProduct(long id)
         {

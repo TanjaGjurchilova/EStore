@@ -160,7 +160,7 @@ namespace EStore.Repositories.Implementations
                 {
                     cmd.Connection.Open();
                 }
-                cmd.CommandText = "SELECT * FROM public.\"Brand\" WHERE LOWER(name)=LOWER(:n);";
+                cmd.CommandText = "SELECT * FROM public.\"Brand\" b WHERE LOWER(b.\"Name\")=LOWER(:n);";
                 _context.CreateParameterFunc(cmd, "@n", brand.Name, NpgsqlDbType.Text);
 
                 dt = _context.ExecuteSelectCommand(cmd);

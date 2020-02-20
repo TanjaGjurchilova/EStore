@@ -65,8 +65,9 @@ namespace EStore.Services.Implementations
                 products = filteredProducts.Skip((fetchProductsRequest.PageNumber - 1) * fetchProductsRequest.ProductsPerPage)
                                            .Take(fetchProductsRequest.ProductsPerPage);
             }
-
-            var totalPages = (int)Math.Ceiling((decimal)productCount / fetchProductsRequest.ProductsPerPage);
+            
+             var  totalPages= (int)Math.Ceiling((decimal)productCount / fetchProductsRequest.ProductsPerPage);
+           
 
             int[] pages = Enumerable.Range(1, totalPages).ToArray();
 

@@ -103,7 +103,7 @@ namespace EStore.Repositories.Implementations
                 {
                     cmd.Connection.Open();
                 }
-                cmd.CommandText = "SELECT * FROM public.\"Category\" WHERE LOWER(name)=LOWER(:n);";
+                cmd.CommandText = "SELECT * FROM public.\"Category\" c WHERE LOWER(c.\"Name\")=LOWER(:n);";
                 _context.CreateParameterFunc(cmd, "@n", Category.Name, NpgsqlDbType.Text);
 
                 dt = _context.ExecuteSelectCommand(cmd);
@@ -140,7 +140,10 @@ namespace EStore.Repositories.Implementations
                     var rowsAffected = _context.ExecuteNonQuery(cmd);
 
                 }
-                throw new Exception("Category exist");
+                else
+                {
+                    throw new Exception("Category exist");
+                }
             }
             catch (Exception ex)
             {
