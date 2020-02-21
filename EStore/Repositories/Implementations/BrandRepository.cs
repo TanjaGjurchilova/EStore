@@ -114,7 +114,7 @@ namespace EStore.Repositories.Implementations
                         cmd.Connection.Open();
                     }
 
-                    cmd.CommandText = "INSERT INTO public.\"Brand\"(\"BrandStatus\", \"CreateDate\", \"IsDeleted\", \"Description\", \"MetaDescription\", \"MetaKeywords\", \"ModifiedDate\", \"Name\", \"Slug\")VALUES ( :bs, :cd, :id, :de, :md, :mk, :d, :n, :s);";
+                    cmd.CommandText = "INSERT INTO public.\"Brand\"(\"BrandStatus\", \"CreateDate\", \"IsDeleted\", \"Description\", \"MetaDescription\", \"MetaKeywords\", \"ModifiedDate\", \"Name\", \"Slug\")VALUES ( :bs, :cd, :isd, :de, :md, :mk, :d, :n, :s);";
                     if (brand.BrandStatus == BrandStatus.Active)
                     {
                         status = 1;
@@ -124,7 +124,7 @@ namespace EStore.Repositories.Implementations
                         status = 0;
                     }
                     _context.CreateParameterFunc(cmd, "@bs", status, NpgsqlDbType.Integer);
-                    _context.CreateParameterFunc(cmd, "@id", brand.IsDeleted, NpgsqlDbType.Boolean);
+                    _context.CreateParameterFunc(cmd, "@isd", brand.IsDeleted, NpgsqlDbType.Boolean);
 
                     _context.CreateParameterFunc(cmd, "@cd", brand.CreateDate.ToString(), NpgsqlDbType.Text);
                     _context.CreateParameterFunc(cmd, "@de", brand.Description, NpgsqlDbType.Text);
@@ -172,10 +172,11 @@ namespace EStore.Repositories.Implementations
                         cmd.Connection.Open();
                     }
 
-                    cmd.CommandText = "UPDATE public.\"Brand\" b SET \"BrandStatus\"=:bs, \"CreateDate\"=:cd, \"IsDeleted\"=:id, \"Description\"=:de, \"MetaDescription\"=:md, \"MetaKeywords\"=:mk, \"ModifiedDate\"=:d, \"Name\"=:n, \"Slug\"=:s WHERE b.\"Id\" =:id ;";
+                    cmd.CommandText = "UPDATE public.\"Brand\" b SET \"BrandStatus\"=:bs, \"CreateDate\"=:cd, \"IsDeleted\"=:isd, \"Description\"=:de, \"MetaDescription\"=:md, \"MetaKeywords\"=:mk, \"ModifiedDate\"=:d, \"Name\"=:n, \"Slug\"=:s WHERE b.\"Id\" =:id ;";
 
+                    _context.CreateParameterFunc(cmd, "@id", brand.Id, NpgsqlDbType.Integer);
                     _context.CreateParameterFunc(cmd, "@bs", brand.BrandStatus, NpgsqlDbType.Integer);
-                    _context.CreateParameterFunc(cmd, "@id", brand.IsDeleted, NpgsqlDbType.Integer);
+                    _context.CreateParameterFunc(cmd, "@isd", brand.IsDeleted, NpgsqlDbType.Integer);
 
                     _context.CreateParameterFunc(cmd, "@cd", brand.CreateDate, NpgsqlDbType.Text);
                     _context.CreateParameterFunc(cmd, "@de", brand.Description, NpgsqlDbType.Text);

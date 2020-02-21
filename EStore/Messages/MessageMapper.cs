@@ -1,4 +1,6 @@
-﻿using EStore.Messages.DataTransferObjects.Product;
+﻿using EStore.Messages.DataTransferObjects.Cart;
+using EStore.Messages.DataTransferObjects.Product;
+using EStore.Models.Cart;
 using EStore.Models.Product;
 using System;
 using System.Collections.Generic;
@@ -140,6 +142,257 @@ namespace EStore.Messages
 
             return productDto;
         }
+
+        public CartDto MapToCartDto(Cart cart)
+        {
+            var cartDto = new CartDto();
+            if (cart != null)
+            {
+                cartDto.Id = cart.Id;
+                cartDto.UniqueCartId = cart.UniqueCartId;
+                cartDto.CartStatus = (int)cart.CartStatus;
+                cartDto.CreateDate = cart.CreateDate;
+                cartDto.ModifiedDate = cart.ModifiedDate;
+                cartDto.IsDeleted = cart.IsDeleted;
+            }
+            return cartDto;
+        }
+
+        public Cart MapToCart(CartDto cartDto)
+        {
+            var cart = new Cart();
+
+            if (cartDto != null)
+            {
+                cart.Id = cartDto.Id;
+                cart.UniqueCartId = cartDto.UniqueCartId;
+                cart.CartStatus = (CartStatus)cartDto.CartStatus;
+                cart.CreateDate = cartDto.CreateDate;
+                cart.ModifiedDate = cartDto.ModifiedDate;
+                cart.IsDeleted = cartDto.IsDeleted;
+            };
+
+            return cart;
+        }
+
+        public CartItemDto MapToCartItemDto(CartItem cartItem)
+        {
+            CartItemDto cartItemDto = null;
+
+            if (cartItem.Product != null)
+            {
+                var productDto = MapToProductDto(cartItem.Product);
+
+                cartItemDto = new CartItemDto
+                {
+                    Id = cartItem.Id,
+                    CartId = cartItem.CartId,
+                    Product = productDto,
+                    Quantity = cartItem.Quantity
+                };
+            }
+
+            return cartItemDto;
+        }
+
+        public CartItem MapToCartItem(CartItemDto cartItemDto)
+        {
+            return new CartItem
+            {
+                CartId = cartItemDto.CartId,
+                ProductId = cartItemDto.Product.Id,
+                Quantity = cartItemDto.Quantity
+            };
+        }
+
+        //public AddressDto MapToAddressDto(Address address)
+        //{
+        //    var addressDto = new AddressDto();
+
+        //    if (address != null)
+        //    {
+        //        addressDto.Id = address.Id;
+        //        addressDto.Name = address.Name;
+        //        addressDto.AddressLine1 = address.AddressLine1;
+        //        addressDto.AddressLine2 = address.AddressLine2;
+        //        addressDto.City = address.City;
+        //        addressDto.Country = address.Country;
+        //        addressDto.State = address.State;
+        //        addressDto.ZipCode = address.ZipCode;
+        //        addressDto.CreateDate = address.CreateDate;
+        //        addressDto.ModifiedDate = address.ModifiedDate;
+        //        addressDto.IsDeleted = address.IsDeleted;
+
+        //    };
+
+        //    return addressDto;
+        //}
+
+        //public Address MapToAddress(AddressDto addressDto)
+        //{
+        //    var address = new Address();
+        //    if (addressDto != null)
+        //    {
+        //        address.Id = addressDto.Id;
+        //        address.Name = addressDto.Name;
+        //        address.AddressLine1 = addressDto.AddressLine1;
+        //        address.AddressLine2 = addressDto.AddressLine2;
+        //        address.City = addressDto.City;
+        //        address.Country = addressDto.Country;
+        //        address.State = addressDto.State;
+        //        address.ZipCode = addressDto.ZipCode;
+        //        address.CreateDate = addressDto.CreateDate;
+        //        address.ModifiedDate = addressDto.ModifiedDate;
+        //        address.IsDeleted = addressDto.IsDeleted;
+        //    };
+        //    return address;
+        //}
+
+        //public CustomerDto MapToCustomerDto(Customer customer)
+        //{
+        //    var customerDto = new CustomerDto
+        //    {
+        //        Id = customer.Id,
+        //        FirstName = customer.Person.FirstName,
+        //        MiddleName = customer.Person.MiddleName,
+        //        LastName = customer.Person.LastName,
+        //        EmailAddress = customer.Person.EmailAddress,
+        //        PhoneNumber = customer.Person.PhoneNumber,
+        //        Gender = (int)customer.Person.Gender,
+        //        DateOfBirth = customer.Person.DateOfBirth,
+        //        CreateDate = customer.CreateDate,
+        //        ModifiedDate = customer.ModifiedDate,
+        //        IsDeleted = customer.IsDeleted
+        //    };
+
+        //    return customerDto;
+        //}
+        //public Customer MapToCustomer(CustomerDto customerDto)
+        //{
+        //    var person = new Person
+        //    {
+        //        Id = customerDto.Id,
+        //        FirstName = customerDto.FirstName,
+        //        MiddleName = customerDto.MiddleName,
+        //        LastName = customerDto.LastName,
+        //        EmailAddress = customerDto.EmailAddress,
+        //        PhoneNumber = customerDto.PhoneNumber,
+        //        Gender = (Gender)customerDto.Gender,
+        //        DateOfBirth = customerDto.DateOfBirth,
+        //        CreateDate = customerDto.CreateDate,
+        //        ModifiedDate = customerDto.ModifiedDate,
+        //        IsDeleted = customerDto.IsDeleted
+        //    };
+
+        //    return new Customer
+        //    {
+        //        Id = customerDto.Id,
+        //        Person = person
+        //    };
+        //}
+
+        //public PersonDto MapToPersonDto(Person person)
+        //{
+        //    var personDto = new PersonDto
+        //    {
+        //        Id = person.Id,
+        //        FirstName = person.FirstName,
+        //        MiddleName = person.MiddleName,
+        //        LastName = person.LastName,
+        //        EmailAddress = person.EmailAddress,
+        //        PhoneNumber = person.PhoneNumber,
+        //        Gender = (int)person.Gender,
+        //        DateOfBirth = person.DateOfBirth,
+        //        CreateDate = person.CreateDate,
+        //        ModifiedDate = person.ModifiedDate,
+        //        IsDeleted = person.IsDeleted
+        //    };
+
+        //    return personDto;
+        //}
+
+        //public Person MapToPerson(PersonDto personDto)
+        //{
+        //    return new Person
+        //    {
+        //        Id = personDto.Id,
+        //        FirstName = personDto.FirstName,
+        //        MiddleName = personDto.MiddleName,
+        //        LastName = personDto.LastName,
+        //        EmailAddress = personDto.EmailAddress,
+        //        PhoneNumber = personDto.PhoneNumber,
+        //        Gender = (Gender)personDto.Gender,
+        //        DateOfBirth = personDto.DateOfBirth,
+        //        CreateDate = personDto.CreateDate,
+        //        ModifiedDate = personDto.ModifiedDate,
+        //        IsDeleted = personDto.IsDeleted
+        //    };
+        //}
+
+        //public OrderDto MapToOrderDto(Order order)
+        //{
+        //    var orderDto = new OrderDto
+        //    {
+        //        Id = order.Id,
+        //        OrderTotal = order.OrderTotal,
+        //        OrderItemTotal = order.OrderTotal,
+        //        ShippingCharge = order.ShippingCharge,
+        //        CustomerId = order.CustomerId,
+        //        OrderStatus = (int)order.OrderStatus,
+        //        CreateDate = order.CreateDate,
+        //        ModifiedDate = order.ModifiedDate,
+        //        IsDeleted = order.IsDeleted
+        //    };
+
+        //    return orderDto;
+        //}
+
+        //public Order MapToOrder(OrderDto orderDto)
+        //{
+        //    return new Order
+        //    {
+        //        Id = orderDto.Id,
+        //        OrderTotal = orderDto.OrderTotal,
+        //        OrderItemTotal = orderDto.OrderTotal,
+        //        ShippingCharge = orderDto.ShippingCharge,
+        //        CustomerId = orderDto.CustomerId,
+        //        OrderStatus = (OrderStatus)orderDto.OrderStatus,
+        //        CreateDate = orderDto.CreateDate,
+        //        ModifiedDate = orderDto.ModifiedDate,
+        //        IsDeleted = orderDto.IsDeleted
+        //    };
+        //}
+
+        //public OrderItemDto MapToOrderItemDto(OrderItem orderItem)
+        //{
+        //    OrderItemDto orderItemDto = null;
+
+        //    if (orderItem?.Product != null)
+        //    {
+        //        var productDto = MapToProductDto(orderItem.Product);
+
+        //        orderItemDto = new OrderItemDto
+        //        {
+        //            Id = orderItem.Id,
+        //            OrderId = orderItem.OrderId,
+        //            Product = productDto,
+        //            Quantity = orderItem.Quantity
+        //        };
+        //    }
+
+        //    return orderItemDto;
+        //}
+
+        //public OrderItem MapToOrderItem(OrderItemDto orderItemDto)
+        //{
+        //    return new OrderItem
+        //    {
+        //        OrderId = orderItemDto.OrderId,
+        //        ProductId = orderItemDto.Product.Id,
+        //        Quantity = orderItemDto.Quantity
+        //    };
+        //}
+
         public List<BrandDto> MapToBrandDtos(IEnumerable<Brand> brands)
         {
             var brandDtos = new List<BrandDto>();
@@ -172,5 +425,26 @@ namespace EStore.Messages
             }
             return productDtos;
         }
+
+        public List<CartItemDto> MapToCartItemDtos(IEnumerable<CartItem> cartItems)
+        {
+            var cartItemDtos = new List<CartItemDto>();
+            foreach (var cartItem in cartItems)
+            {
+                var cartItemDto = MapToCartItemDto(cartItem);
+                cartItemDtos.Add(cartItemDto);
+            }
+            return cartItemDtos;
+        }
+        //public List<AddressDto> MapToAddressDtos(IEnumerable<Address> addresses)
+        //{
+        //    var addressDtos = new List<AddressDto>();
+        //    foreach (var address in addresses)
+        //    {
+        //        var addressDto = MapToAddressDto(address);
+        //        addressDtos.Add(addressDto);
+        //    }
+        //    return addressDtos;
+        //}
     }
 }
