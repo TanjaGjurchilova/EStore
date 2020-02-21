@@ -104,7 +104,7 @@ namespace EStore.Repositories.Implementations
                         cmd.Connection.Open();
                     }
 
-                    cmd.CommandText = "INSERT INTO public.\"CartItems\"(\"CartId\", \"ProductId\", \"Quantity\", \"IsDeleted\", \"CreateDate\", \" ModifiedDate\")VALUES ( :cid, :pid, :q, :isd, :cd, :d);";
+                    cmd.CommandText = "INSERT INTO public.\"CartItems\"(\"CartId\", \"ProductId\", \"Quantity\", \"IsDeleted\", \"CreateDate\", \"ModifiedDate\")VALUES ( :cid, :pid, :q, :isd, :cd, :d);";
 
                     _context.CreateParameterFunc(cmd, "@cid", cartItem.CartId, NpgsqlDbType.Integer);
                     _context.CreateParameterFunc(cmd, "@pid", cartItem.ProductId, NpgsqlDbType.Integer);
@@ -135,7 +135,7 @@ namespace EStore.Repositories.Implementations
                     cmd.Connection.Open();
                 }
 
-                cmd.CommandText = "UPDATE public.\"CartItems\" ci SET ci.\"CartId\"=:cid, ci.\"ProductId\":=pid, ci.\"Quantity\":=q, ci.\"IsDeleted\":=isd, ci.\"CreateDate\":=cd, ci.\" ModifiedDate\":=d WHERE ci.\"Id\" =:id ;;";
+                cmd.CommandText = "UPDATE public.\"CartItems\" ci SET ci.\"CartId\"=:cid, ci.\"ProductId\":=pid, ci.\"Quantity\":=q, ci.\"IsDeleted\":=isd, ci.\"CreateDate\":=cd, ci.\"ModifiedDate\":=d WHERE ci.\"Id\" =:id ;;";
 
                 _context.CreateParameterFunc(cmd, "@id", cartItem.Id, NpgsqlDbType.Integer);
                 _context.CreateParameterFunc(cmd, "@cid", cartItem.CartId, NpgsqlDbType.Integer);

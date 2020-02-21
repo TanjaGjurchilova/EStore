@@ -101,7 +101,7 @@ namespace EStore.Repositories.Implementations
                     cmd.Connection.Open();
                 }
 
-                cmd.CommandText = "INSERT INTO public.\"Cart\"(\"UniqueCartId\", \"IsDeleted\", \"CreateDate\", \"ModifiedDate\", \"CardStatus\")VALUES ( :ucid, :isd, :cd, :d, :cs);";
+                cmd.CommandText = "INSERT INTO public.\"Cart\"(\"UniqueCartId\", \"IsDeleted\", \"CreateDate\", \"ModifiedDate\", \"CartStatus\")VALUES ( :ucid, :isd, :cd, :d, :cs);";
                 int status;
                 if (cart.CartStatus == CartStatus.Open)
                 {
@@ -112,7 +112,7 @@ namespace EStore.Repositories.Implementations
                     status = 1;
                 }
                 _context.CreateParameterFunc(cmd, "@cs", status, NpgsqlDbType.Integer);
-                _context.CreateParameterFunc(cmd, "@ucid", cart.UniqueCartId, NpgsqlDbType.Integer);
+                _context.CreateParameterFunc(cmd, "@ucid", cart.UniqueCartId, NpgsqlDbType.Text);
                 _context.CreateParameterFunc(cmd, "@isd", cart.IsDeleted, NpgsqlDbType.Boolean);
                 _context.CreateParameterFunc(cmd, "@cd", cart.CreateDate.ToString(), NpgsqlDbType.Text);
                 _context.CreateParameterFunc(cmd, "@d", cart.ModifiedDate.ToString(), NpgsqlDbType.Text);
@@ -150,7 +150,7 @@ namespace EStore.Repositories.Implementations
                 }
                 _context.CreateParameterFunc(cmd, "@id", cart.Id, NpgsqlDbType.Integer);
                 _context.CreateParameterFunc(cmd, "@cs", status, NpgsqlDbType.Integer);
-                _context.CreateParameterFunc(cmd, "@ucid", cart.UniqueCartId, NpgsqlDbType.Integer);
+                _context.CreateParameterFunc(cmd, "@ucid", cart.UniqueCartId, NpgsqlDbType.Text);
                 _context.CreateParameterFunc(cmd, "@isd", cart.IsDeleted, NpgsqlDbType.Boolean);
                 _context.CreateParameterFunc(cmd, "@cd", cart.CreateDate.ToString(), NpgsqlDbType.Text);
                 _context.CreateParameterFunc(cmd, "@d", cart.ModifiedDate.ToString(), NpgsqlDbType.Text);
