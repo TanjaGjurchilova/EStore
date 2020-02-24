@@ -78,7 +78,7 @@ namespace EStore.Repositories.Implementations
                     cmd.Connection.Open();
                 }
                 cmd.CommandText =
-                    "SELECT * FROM public.\"CartItems\" ci INNER JOIN  public.\"Cart\" c ON c.\"Id\" = ci.\"Id\" WHERE c.\"Id\" =:id;";
+                    "SELECT * FROM public.\"CartItems\" ci INNER JOIN  public.\"Cart\" c ON c.\"Id\" = ci.\"CartId\" WHERE c.\"Id\" =:id;";
                 _context.CreateParameterFunc(cmd, "@id", cartId, NpgsqlDbType.Integer);
                 dt = _context.ExecuteSelectCommand(cmd);
                
