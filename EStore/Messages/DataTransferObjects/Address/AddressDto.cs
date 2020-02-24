@@ -1,13 +1,13 @@
-﻿using EStore.Models.Shared;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EStore.Models.Address
+namespace EStore.Messages.DataTransferObjects.Address
 {
-    public class Address :BaseObject
+    public class AddressDto
     {
+        public long Id { get; set; }
         public string Name { get; set; }
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set; }
@@ -15,7 +15,8 @@ namespace EStore.Models.Address
         public string Country { get; set; }
         public string State { get; set; }
         public string ZipCode { get; set; }
-        public int CostumerId { get; set; }
-
+        public DateTimeOffset CreateDate { get; set; }
+        public DateTimeOffset ModifiedDate { get; set; }
+        public bool IsDeleted { get; set; }
     }
 }
