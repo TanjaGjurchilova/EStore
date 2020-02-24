@@ -48,6 +48,11 @@ namespace EStore
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<ICartRepository, CartRepository>();
             services.AddTransient<ICartItemRepository, CartItemRepository>();
+            services.AddTransient<IAddressRepository, AddressRepository>();
+            services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<IPersonRepository, PersonRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IOrderItemsRepository, OrderItemsRepository>();
 
 
             services.AddTransient<IBrandService, BrandService>();

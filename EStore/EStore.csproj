@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Messages\DataTransferObjects\Shared\" />
     <Folder Include="Database\" />
     <Folder Include="Messages\Request\Address\" />
     <Folder Include="Messages\Response\Address\" />
