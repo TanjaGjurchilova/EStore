@@ -1,5 +1,7 @@
-﻿using EStore.Messages.DataTransferObjects.Cart;
+﻿using EStore.Messages.DataTransferObjects.Address;
+using EStore.Messages.DataTransferObjects.Cart;
 using EStore.Messages.DataTransferObjects.Product;
+using EStore.Models.Address;
 using EStore.Models.Cart;
 using EStore.Models.Product;
 using System;

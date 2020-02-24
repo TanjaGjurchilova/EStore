@@ -76,7 +76,7 @@ namespace EStore.Repositories.Implementations
                     cmd.Connection.Open();
                 }
                 cmd.CommandText =
-                    "SELECT * FROM public.\"OrderItems\" b  INNER JOIN  public.\"People\" c ON c.\"PersonId\" = b.\"Id\"  WHERE b.\"Id\" =:id;";
+                    "SELECT * FROM public.\"OrderItems\" b  WHERE b.\"Id\" =:id;";
                 _context.CreateParameterFunc(cmd, "@id", id, NpgsqlDbType.Integer);
                 dt = _context.ExecuteSelectCommand(cmd);
             }
@@ -104,7 +104,7 @@ namespace EStore.Repositories.Implementations
                 {
                     cmd.Connection.Open();
                 }
-                cmd.CommandText = "SELECT * FROM public.\"OrderItems\" b INNER JOIN  public.\"People\" c ON c.\"PersonId\" = b.\"Id\"  ORDER bY b.\"Id\" DESC";
+                cmd.CommandText = "SELECT * FROM public.\"OrderItems\" b  ORDER bY b.\"Id\" DESC";
 
                 dt = _context.ExecuteSelectCommand(cmd);
             }
@@ -126,38 +126,23 @@ namespace EStore.Repositories.Implementations
             try
             {
                 var cmd = _context.CreateCommand();
-                if (cmd.Connection.State != ConnectionState.Open)
-                {
-                    cmd.Connection.Open();
-                }
-                cmd.CommandText = "SELECT * FROM public.\"OrderItems\" b  WHERE b.\"PersonId\"=:pid";
-                _context.CreateParameterFunc(cmd, "@pid", OrderItems.PersonId, NpgsqlDbType.Text);
-
-                dt = _context.ExecuteSelectCommand(cmd);
-
-                if (dt.Rows.Count == 0)
-                {
+                
                     if (cmd.Connection.State != ConnectionState.Open)
                     {
                         cmd.Connection.Open();
                     }
 
-                    cmd.CommandText = "INSERT INTO public.\"OrderItems\"(\"CreateDate\", \"ModifiedDate\", \"IsDeleted\", \"PersonId\")VALUES ( :cd, :d, :isd, :pid);";
+                    cmd.CommandText = "INSERT INTO public.\"OrderItems\"(\"CreateDate\", \"ModifiedDate\", \"IsDeleted\", \"ProductId\")VALUES ( :cd, :d, :isd, :pid);";
 
-                    _context.CreateParameterFunc(cmd, "@pid", OrderItems.PersonId, NpgsqlDbType.Integer);
-                    _context.CreateParameterFunc(cmd, "@isd", OrderItems.IsDeleted, NpgsqlDbType.Boolean);
-                    _context.CreateParameterFunc(cmd, "@cd", OrderItems.CreateDate.ToString(), NpgsqlDbType.Text);
-                    _context.CreateParameterFunc(cmd, "@d", OrderItems.ModifiedDate.ToString(), NpgsqlDbType.Text);
+                    _context.CreateParameterFunc(cmd, "@pid", orderItem.ProductId, NpgsqlDbType.Integer);
+                    _context.CreateParameterFunc(cmd, "@isd", orderItem.IsDeleted, NpgsqlDbType.Boolean);
+                    _context.CreateParameterFunc(cmd, "@cd", orderItem.CreateDate.ToString(), NpgsqlDbType.Text);
+                    _context.CreateParameterFunc(cmd, "@d", orderItem.ModifiedDate.ToString(), NpgsqlDbType.Text);
 
 
 
                     var rowsAffected = _context.ExecuteNonQuery(cmd);
 
-                }
-                else
-                {
-                    throw new Exception("OrderItems exist");
-                }
             }
             catch (Exception ex)
             {
@@ -173,17 +158,7 @@ namespace EStore.Repositories.Implementations
             try
             {
                 var cmd = _context.CreateCommand();
-                if (cmd.Connection.State != ConnectionState.Open)
-                {
-                    cmd.Connection.Open();
-                }
-                cmd.CommandText = "SELECT * FROM public.\"OrderItems\" b  WHERE b.\"PersonId\"=:pid";
-                _context.CreateParameterFunc(cmd, "@pid", OrderItems.PersonId, NpgsqlDbType.Text);
-
-                dt = _context.ExecuteSelectCommand(cmd);
-
-                if (dt.Rows.Count == 0)
-                {
+              
                     if (cmd.Connection.State != ConnectionState.Open)
                     {
                         cmd.Connection.Open();
@@ -191,18 +166,17 @@ namespace EStore.Repositories.Implementations
 
                     cmd.CommandText = "UPDATE public.\"OrderItems\" b SET \"CreateDate\"=:cd, \"ModifiedDate\"=:d, \"IsDeleted\"=:isd, \"PersonId\"=:pid WHERE b.\"Id\" =:id ;";
 
-                    _context.CreateParameterFunc(cmd, "@id", OrderItems.Id, NpgsqlDbType.Integer);
-                    _context.CreateParameterFunc(cmd, "@p", OrderItems.PersonId, NpgsqlDbType.Integer);
-                    _context.CreateParameterFunc(cmd, "@isd", OrderItems.IsDeleted, NpgsqlDbType.Integer);
-                    _context.CreateParameterFunc(cmd, "@cd", OrderItems.CreateDate, NpgsqlDbType.Text);
-                    _context.CreateParameterFunc(cmd, "@d", OrderItems.ModifiedDate, NpgsqlDbType.Text);
+                    _context.CreateParameterFunc(cmd, "@id", orderItem.Id, NpgsqlDbType.Integer);
+                    _context.CreateParameterFunc(cmd, "@pid", orderItem.ProductId, NpgsqlDbType.Integer);
+                    _context.CreateParameterFunc(cmd, "@isd", orderItem.IsDeleted, NpgsqlDbType.Boolean);
+                    _context.CreateParameterFunc(cmd, "@cd", orderItem.CreateDate.ToString(), NpgsqlDbType.Text);
+                    _context.CreateParameterFunc(cmd, "@d", orderItem.ModifiedDate.ToString(), NpgsqlDbType.Text);
 
 
 
                     var rowsAffected = _context.ExecuteNonQuery(cmd);
 
-                }
-                throw new Exception("OrderItems exist");
+               
             }
             catch (Exception ex)
             {
@@ -222,7 +196,7 @@ namespace EStore.Repositories.Implementations
                 }
                 cmd.CommandText =
                     "DELETE FROM public.\"OrderItems\" b  WHERE b.\"Id\" =:id;";
-                _context.CreateParameterFunc(cmd, "@id", OrderItems.Id, NpgsqlDbType.Integer);
+                _context.CreateParameterFunc(cmd, "@id", orderItem.Id, NpgsqlDbType.Integer);
                 _context.ExecuteSelectCommand(cmd);
             }
             catch (Exception ex)

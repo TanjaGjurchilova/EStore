@@ -54,11 +54,11 @@ namespace EStore.Repositories.Implementations
                 CreateDate = DateTimeOffset.Parse(dr["CreateDate"].ToString()),
                 ModifiedDate = DateTimeOffset.Parse(dr["ModifiedDate"].ToString()),
                 IsDeleted = bool.Parse(dr["IsDeleted"].ToString()),
-                AddressId = int.Parse(dr["Id"].ToString()),
-                CustomerId = int.Parse(dr["Id"].ToString()),
-                OrderItemTotal=decimal.Parse(dr["Id"].ToString()),
-                OrderTotal = decimal.Parse(dr["Id"].ToString()),
-                ShippingCharge = decimal.Parse(dr["Id"].ToString()),
+                AddressId = int.Parse(dr["AddressId"].ToString()),
+                CustomerId = int.Parse(dr["CustomerId"].ToString()),
+                OrderItemTotal=decimal.Parse(dr["OrderItemTotal"].ToString()),
+                OrderTotal = decimal.Parse(dr["OrderTotal"].ToString()),
+                ShippingCharge = decimal.Parse(dr["ShippingCharge"].ToString()),
                 
             };
             if (dr["OrderStatus"].ToString() == "0") Order.OrderStatus = OrderStatus.Canceled;
@@ -174,17 +174,7 @@ namespace EStore.Repositories.Implementations
             try
             {
                 var cmd = _context.CreateCommand();
-                if (cmd.Connection.State != ConnectionState.Open)
-                {
-                    cmd.Connection.Open();
-                }
-                cmd.CommandText = "SELECT * FROM public.\"Order\" b  WHERE b.\"PersonId\"=:pid";
-                _context.CreateParameterFunc(cmd, "@pid", Order.PersonId, NpgsqlDbType.Text);
-
-                dt = _context.ExecuteSelectCommand(cmd);
-
-                if (dt.Rows.Count == 0)
-                {
+              
                     if (cmd.Connection.State != ConnectionState.Open)
                     {
                         cmd.Connection.Open();
@@ -192,6 +182,7 @@ namespace EStore.Repositories.Implementations
 
                     cmd.CommandText = "UPDATE public.\"Order\" b SET \"CustomerId\"=:cid , \"AddressId\"=:a , \"OrderTotal\"=:ot , \"OrderItemTotal\"=:oit , \"ShippingCharge\"=:sc , \"OrderStatus\"=:os , \"CreateDate\"=:cd , \"ModifiedDate\"=:d , \"IsDeleted\"=:isd WHERE b.\"Id\" =:id ;";
 
+                    _context.CreateParameterFunc(cmd, "@id", Order.Id, NpgsqlDbType.Integer);
                     _context.CreateParameterFunc(cmd, "@os", Order.OrderStatus, NpgsqlDbType.Integer);
                     _context.CreateParameterFunc(cmd, "@cid", Order.CustomerId, NpgsqlDbType.Integer);
                     _context.CreateParameterFunc(cmd, "@a", Order.AddressId, NpgsqlDbType.Integer);
@@ -207,8 +198,6 @@ namespace EStore.Repositories.Implementations
 
                     var rowsAffected = _context.ExecuteNonQuery(cmd);
 
-                }
-                throw new Exception("Order exist");
             }
             catch (Exception ex)
             {
